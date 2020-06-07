@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense } from 'react';
 import usePromise from 'react-promise-suspense';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -12,25 +12,26 @@ import InputBase from '@material-ui/core/InputBase';
 
 import Skeleton from '@material-ui/lab/Skeleton';
 
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import {
   fade,
   makeStyles,
-  responsiveFontSizes,
+  ThemeProvider,
+  createMuiTheme,
 } from '@material-ui/core/styles';
+import { yellow, green } from '@material-ui/core/colors';
 
-export default function Main(props) {
-  let themeMui = createMuiTheme({
-    overrides: {
-      MuiContainer: {
-        root: {
-          backgroundColor: 'lightblue',
-        },
-      },
+export default function Main() {
+  // MF Module can manipulte global and can be maniplated by other MF Modules
+  const theme = createMuiTheme({
+    palette: {
+      primary: green,
     },
   });
-  themeMui = responsiveFontSizes(themeMui);
   const getClasses = makeStyles((theme) => ({
+    yellow: {
+      color: 'yellow',
+      backgroundColor: yellow,
+    },
     appbar: {
       marginBottom: theme.spacing(2),
     },
@@ -84,12 +85,6 @@ export default function Main(props) {
   }));
   const classes = getClasses();
 
-  const LazyNews = lazy(() => {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(import('../components/News')), 2000);
-    });
-  });
-
   const Things = () => {
     const data = usePromise(
       () =>
@@ -106,8 +101,14 @@ export default function Main(props) {
   };
 
   return (
-    <ThemeProvider theme={themeMui}>
-      <AppBar position="static" className={classes.appbar}>
+    <ThemeProvider theme={theme}>
+      <AppBar
+        classes={{
+          colorPrimary: classes.yellow,
+        }}
+        position="static"
+        className={classes.appbar}
+      >
         <Toolbar>
           <IconButton
             edge="start"

@@ -14,9 +14,9 @@ module.exports = (config, env) => {
     },
     allowedHosts: ['localhost:3000'],
   };
-  //   config.externals = {
-  //     react: 'React',
-  //     'react-dom': 'ReactDOM',
-  //   };
+  config.externals = {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+  };
   return config;
 };
