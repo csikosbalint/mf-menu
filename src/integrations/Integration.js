@@ -1,7 +1,6 @@
 import React from 'react';
-import { useTheme } from '@material-ui/core';
 
-class MenuIntegration extends React.Component {
+class Integration extends React.Component {
   componentDidMount() {
     const { name, host, document, id } = this.props;
     const scriptId = `micro-frontend-script-${name}-${id}`;
@@ -19,7 +18,13 @@ class MenuIntegration extends React.Component {
         script.id = scriptId;
         script.crossOrigin = '';
         script.src = `${host}${manifest.files['main.js']}`;
-        script.onload = this.renderMicroFrontend;
+        script.onload = () => {
+          window[`render${name}`](
+            `${name}-container-${id}`,
+            this.props.theme,
+            `${host}${manifest.files['main.css']}`
+          );
+        };
         document.head.appendChild(script);
       })
       .catch((e) => {
@@ -34,9 +39,9 @@ class MenuIntegration extends React.Component {
   }
 
   renderMicroFrontend = () => {
-    const { name, window, id, theme } = this.props;
+    const { name, window, id } = this.props;
     // MF API
-    window[`render${name}`](`${name}-container-${id}`, theme);
+    window[`render${name}`](`${name}-container-${id}`);
   };
 
   render() {
@@ -44,9 +49,9 @@ class MenuIntegration extends React.Component {
   }
 }
 
-MenuIntegration.defaultProps = {
+Integration.defaultProps = {
   document,
   window,
 };
 
-export default MenuIntegration;
+export default Integration;

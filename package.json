@@ -3,20 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.10.1",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.55",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "jss-rtl": "^0.3.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-jss": "^10.2.0",
-    "react-promise-suspense": "^0.3.3",
-    "react-scripts": "3.4.1",
-    "react-shadow": "^18.1.2",
-    "react-shadow-dom-retarget-events": "^1.0.11"
+    "react-promise-suspense": "^0.3.3"
   },
   "scripts": {
     "watch": "nodemon --delay 5 --watch src --watch public --exec \"yarn build && serve -s build --cors -p 4000\"",
@@ -41,7 +35,10 @@
     ]
   },
   "devDependencies": {
+    "@material-ui/core": "^4.10.1",
     "nodemon": "^2.0.4",
-    "react-app-rewired": "^2.1.6"
+    "react-app-rewired": "^2.1.6",
+    "react-scripts": "3.4.1",
+    "webpack-visualizer-plugin": "^0.1.11"
   }
 }

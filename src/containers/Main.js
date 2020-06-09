@@ -15,23 +15,14 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import {
   fade,
   makeStyles,
+  useTheme,
+  responsiveFontSizes,
   ThemeProvider,
-  createMuiTheme,
 } from '@material-ui/core/styles';
-import { yellow, green } from '@material-ui/core/colors';
 
 export default function Main() {
-  // MF Module can manipulte global and can be maniplated by other MF Modules
-  const theme = createMuiTheme({
-    palette: {
-      primary: green,
-    },
-  });
+  const modifiedTheme = responsiveFontSizes(useTheme());
   const getClasses = makeStyles((theme) => ({
-    yellow: {
-      color: 'yellow',
-      backgroundColor: yellow,
-    },
     appbar: {
       marginBottom: theme.spacing(2),
     },
@@ -101,14 +92,8 @@ export default function Main() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <AppBar
-        classes={{
-          colorPrimary: classes.yellow,
-        }}
-        position="static"
-        className={classes.appbar}
-      >
+    <ThemeProvider theme={modifiedTheme}>
+      <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <IconButton
             edge="start"

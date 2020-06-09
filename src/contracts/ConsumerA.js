@@ -1,10 +1,12 @@
 import React from 'react';
-import MenuIntegration from '../integrations/MenuIntegration';
-import { createMuiTheme, MuiThemeProvider, useTheme } from '@material-ui/core';
-import { blue, yellow, red } from '@material-ui/core/colors';
+import Integration from '../integrations/Integration';
+
 import GreenButton from '../components/GreenButton';
 
 export default function ConsumerA() {
+  const { createMuiTheme, MuiThemeProvider, Container } = window.MaterialUI;
+  const { yellow, red } = window.MaterialUI.colors;
+
   //   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   //   const theme = React.useMemo(
   //     () =>
@@ -23,18 +25,26 @@ export default function ConsumerA() {
   });
   return (
     <>
-      <MuiThemeProvider theme={theme}>
+      <Container
+        maxWidth="sm"
+        style={{
+          backgroundColor: 'lightgreen',
+          padding: '1rem',
+        }}
+      >
         <h2>The global theme is yellow</h2>
-        <h3>MF Container:</h3>
-        <GreenButton color={red} />
-        <h3>MF Module:</h3>
-        <MenuIntegration
-          host="http://localhost:4000"
-          name="Menu"
-          id="1"
-          theme={theme}
-        />
-      </MuiThemeProvider>
+        <MuiThemeProvider theme={theme}>
+          <h3>MF Container:</h3>
+          <GreenButton color={red} />
+          <h3>MF Module:</h3>
+          <Integration
+            host="http://localhost:4000"
+            name="Menu"
+            id="1"
+            theme={theme}
+          />
+        </MuiThemeProvider>
+      </Container>
     </>
   );
 }
