@@ -1,26 +1,16 @@
-import React, { Suspense } from 'react';
-import usePromise from 'react-promise-suspense';
-
+import React, { Suspense, lazy } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
-
 import Skeleton from '@material-ui/lab/Skeleton';
+import { fade, makeStyles, Typography, ThemeProvider } from '@material-ui/core';
+import usePromise from 'react-promise-suspense';
 
-import {
-  fade,
-  makeStyles,
-  useTheme,
-  responsiveFontSizes,
-} from '@material-ui/core/styles';
-
-export default function Main() {
-  const modifiedTheme = responsiveFontSizes(useTheme());
+export default function Menu() {
   const getClasses = makeStyles((theme) => ({
     appbar: {
       marginBottom: theme.spacing(2),
@@ -74,23 +64,12 @@ export default function Main() {
     },
   }));
   const classes = getClasses();
+  const LazyNews = lazy(() => {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(import('../components/News')), 2000);
+    });
+  });
 
-  const Things = () => {
-    const data = usePromise(
-      () =>
-        fetch(
-          'http://slowwly.robertomurray.co.uk/delay/6000/url/http://dq3kw.mocklab.io/json/1'
-        ).then((res) => res.json()),
-      []
-    );
-    return (
-      <Typography variant="h6" style={{ margin: '1rem' }}>
-        {data.value}
-      </Typography>
-    );
-  };
-
-  const { ThemeProvider } = window.MaterialUI;
   return (
     <ThemeProvider theme={window.theme}>
       <AppBar position="static" className={classes.appbar}>
@@ -103,22 +82,19 @@ export default function Main() {
           >
             <MenuIcon />
           </IconButton>
-          {
-            //   <Suspense
-            //   fallback={
-            //     <Skeleton width="50px" height="25px" style={{ margin: '1rem' }} />
-            //   }
-            // >
-            //   <LazyNews />
-            // </Suspense>
-          }
           <Suspense
             fallback={
               <Skeleton width="50px" height="25px" style={{ margin: '1rem' }} />
             }
           >
-            <Things />
+            <LazyNews />
           </Suspense>
+
+          <Suspense
+            fallback={
+              <Skeleton width="50px" height="25px" style={{ margin: '1rem' }} />
+            }
+          ></Suspense>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
