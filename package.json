@@ -9,12 +9,13 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-promise-suspense": "^0.3.3"
   },
   "scripts": {
     "watch": "nodemon --delay 5 --watch src --watch public --watch index.js --exec \"yarn build && serve -s build --cors -p 4000\"",
-    "start": "PORT=4000 react-app-rewired start",
-    "build": "react-app-rewired build",
+    "start": "PORT=4000 NODE_ENV=production react-app-rewired start",
+    "build": "ADDPATH=/MenuMF react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },

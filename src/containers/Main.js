@@ -17,7 +17,6 @@ import {
   makeStyles,
   useTheme,
   responsiveFontSizes,
-  ThemeProvider,
 } from '@material-ui/core/styles';
 
 export default function Main() {
@@ -91,8 +90,9 @@ export default function Main() {
     );
   };
 
+  const { ThemeProvider } = window.MaterialUI;
   return (
-    <ThemeProvider theme={modifiedTheme}>
+    <ThemeProvider theme={window.theme}>
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <IconButton

@@ -1,6 +1,6 @@
 const Visualizer = require('webpack-visualizer-plugin');
 module.exports = (config, env) => {
-  config.output.publicPath = '/MenuMF/';
+  config.output.publicPath = `/MF/menu/`;
   config.optimization.runtimeChunk = false;
   config.optimization.flagIncludedChunks = true;
   config.optimization.splitChunks = {

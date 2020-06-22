@@ -1,7 +1,6 @@
 import Menu from './containers/Menu';
-import React from 'react';
-console.log(process.env.NODE_ENV);
-if (process.env.NODE_ENV !== 'production') {
+console.log(process.env);
+if (process.env.NODE_ENV && process.env.NODE_ENV !== 'production') {
   const unpkgReact = window.document.createElement('script');
   unpkgReact.setAttribute(
     'src',
@@ -17,19 +16,20 @@ if (process.env.NODE_ENV !== 'production') {
   unpkgReactDOM.setAttribute('onload', 'addDep()');
   const addDep = window.document.createElement('script');
   addDep.innerText =
-    'var addDep = function() { setTimeout( () => {window.menuReactDOM = window.ReactDOM}, 2000) }';
+    'var addDep = function() { setTimeout(() => {window.postMessage("start", "http://localhost:8080");}, 1000);}, 2000) }';
 
   window.document.body.appendChild(unpkgReact);
   window.document.body.appendChild(addDep);
   window.document.body.appendChild(unpkgReactDOM);
 }
-let timeout = 10; // 5 seconds = 500ms x 10
-let checkExist = setInterval(function () {
-  if (window.menuReactDOM && window.menuReactDOM.render) {
-    window.menuReactDOM.render(<Menu />, document.getElementById('root'));
-    clearInterval(checkExist);
-  }
-  if (timeout < 0) {
-  }
-  timeout--;
-}, 500);
+console.log(`index.js`);
+window.addEventListener(
+  'message',
+  (event) => {
+    console.log(event);
+    if (event.data !== 'start') return;
+    const React = window.React;
+    window.ReactDOM.render(<Menu />, document.getElementById('root'));
+  },
+  false
+);
