@@ -7,8 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { fade, makeStyles, Typography, ThemeProvider } from '@material-ui/core';
-import usePromise from 'react-promise-suspense';
+import { fade, makeStyles, ThemeProvider } from '@material-ui/core';
 
 export default function Menu() {
   const getClasses = makeStyles((theme) => ({

@@ -1,6 +1,6 @@
 import Menu from './containers/Menu';
-console.log(process.env);
-if (process.env.NODE_ENV && process.env.NODE_ENV !== 'production') {
+import { MANIFEST } from './integrations/MenuAPI';
+if (false) {
   const unpkgReact = window.document.createElement('script');
   unpkgReact.setAttribute(
     'src',
@@ -22,14 +22,26 @@ if (process.env.NODE_ENV && process.env.NODE_ENV !== 'production') {
   window.document.body.appendChild(addDep);
   window.document.body.appendChild(unpkgReactDOM);
 }
-console.log(`index.js`);
+window.MF = true;
 window.addEventListener(
   'message',
   (event) => {
-    console.log(event);
-    if (event.data !== 'start') return;
-    const React = window.React;
-    window.ReactDOM.render(<Menu />, document.getElementById('root'));
+    if (event.source.MF) {
+      const msg = event.data;
+      switch (msg.cmd) {
+        case 'start': {
+          const React = window.React;
+          window.ReactDOM.render(<Menu />, document.getElementById('root'));
+          let msg = { ...MANIFEST.communication.command };
+          msg.cmd = 'done';
+          event.source.postMessage(msg, `${window.location.href}`);
+          break;
+        }
+        default: {
+          console.log(event.data);
+        }
+      }
+    }
   },
   false
 );
